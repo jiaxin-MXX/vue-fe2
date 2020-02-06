@@ -19,7 +19,7 @@
             </el-menu-item>
           </el-menu>
         </el-aside>
-        <el-main style="background:#e9eef3;width:100%">
+        <el-main style="background:#e9eef3;width:100%;padding: .2rem .2rem 1rem">
           <router-view></router-view>
         </el-main>
       </el-container>

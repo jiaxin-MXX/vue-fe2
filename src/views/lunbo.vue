@@ -1,13 +1,7 @@
 <template>
   <div class="about">
-    <el-container style="height:100%">
-      <el-header style="height:.4rem">
-        <el-button @click="handleclick" type="primary" icon="el-icon-circle-plus-outline" circle></el-button>
-      </el-header>
-      <el-main style="height:100%">
-        <router-view></router-view>
-      </el-main>
-    </el-container>
+   <el-button @click="handleclick" type="primary" icon="el-icon-circle-plus-outline" circle>
+     </el-button><router-view></router-view>
   </div>
 </template>
 <script>
@@ -21,6 +15,5 @@ export default {
 </script>
 <style lang="stylus" scoped>
 .about{
-  height :100%
 }
 </style>

@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Lunbo from '../views/lunbo.vue'
-import Index from '../views/index.vue'
-import Lunboadd from 'components/lunbo/add.vue'
-import lunboshow from 'components/lunbo/show.vue'
-import lunboupdata from 'components/lunbo/updata.vue'
+import Home from '../views/home.vue'
+import Login from '../views/login.vue'
+import Register from '../views/register.vue'
+import store from 'store'
+
 const originalPush = VueRouter.prototype.push
 VueRouter.prototype.push = function push(location) {
   return originalPush.call(this, location).catch(err => err)
@@ -14,36 +14,24 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    redirect:'index'
+    path:'/',
+    redirect:'/home'
+  }
+  ,
+  {
+    path: '/home',
+    name: 'home',
+    component: Home
   },
   {
-    path: '/index',
-    name: 'index',
-    component: Index
+    path: '/login',
+    name: 'login',
+    component: Login
   },
   {
-    path: '/lunbo',
-    name: 'lunbo',
-    component:Lunbo,
-    redirect:'/lunbo/show',
-    children: [
-      {
-        path: 'add',
-        name:'lunboadd',
-        component: Lunboadd
-      },
-      {
-        path: 'show',
-        name:'lunboshow',
-        component: lunboshow
-      },
-      {
-        path: 'updata/:id',
-        name:'lunboupdata',
-        component: lunboupdata
-      },
-    ]
+    path: '/register',
+    name: 'register',
+    component: Register
   }
 ]
 
@@ -51,6 +39,19 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach((to, from, next) => {
+  if(from.name=='login' || to.name=='login'){
+    next()
+  }else{
+    if(store.get('user')){
+      next()
+    }else{
+      next("/login")
+    }
+  }
+  // next()
 })
 
 export default router

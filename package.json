@@ -10,6 +10,7 @@
     "axios": "^0.19.2",
     "core-js": "^3.4.4",
     "element-ui": "^2.13.0",
+    "store": "^2.0.12",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
     "vue": "^2.6.10",
@@ -21,6 +22,8 @@
     "@vue/cli-plugin-router": "^4.1.0",
     "@vue/cli-plugin-vuex": "^4.1.0",
     "@vue/cli-service": "^4.1.0",
+    "babel-plugin-component": "^1.1.1",
+    "vue-cli-plugin-element": "^1.0.1",
     "vue-template-compiler": "^2.6.10"
   },
   "browserslist": [

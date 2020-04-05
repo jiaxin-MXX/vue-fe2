@@ -3,6 +3,9 @@ import VueRouter from 'vue-router'
 import Home from '../views/home.vue'
 import Login from '../views/login.vue'
 import Register from '../views/register.vue'
+
+import Product from 'components/product/product.vue'
+import Productadd from 'components/product/productadd.vue'
 import store from 'store'
 
 const originalPush = VueRouter.prototype.push
@@ -21,7 +24,19 @@ const routes = [
   {
     path: '/home',
     name: 'home',
-    component: Home
+    component: Home,
+    children:[
+      {
+        path: '/product/:mess',
+        name:'product',
+        component: Product,
+      },
+      {
+        path:'/productadd',
+        name:'add',
+        component:Productadd
+      }
+    ]
   },
   {
     path: '/login',
@@ -32,7 +47,7 @@ const routes = [
     path: '/register',
     name: 'register',
     component: Register
-  }
+  },
 ]
 
 const router = new VueRouter({

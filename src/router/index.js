@@ -25,6 +25,7 @@ const routes = [
     path: '/home',
     name: 'home',
     component: Home,
+    redirect:'/product/all',
     children:[
       {
         path: '/product/:mess',

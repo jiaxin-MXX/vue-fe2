@@ -1,6 +1,6 @@
 <template>
   <div class="contain">
-    <el-form :model="ruleForm" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+    <el-form label-width='100px' :model="ruleForm" ref="ruleForm" class="demo-ruleForm">
       <el-form-item label="产品名称" required>
         <el-input v-model="ruleForm.name"></el-input>
       </el-form-item>
@@ -9,6 +9,9 @@
           <el-option label="华为" value="huawei"></el-option>
           <el-option label="OPPO" value="oppo"></el-option>
         </el-select>
+      </el-form-item>
+      <el-form-item label="标题" required>
+        <el-input v-model="ruleForm.title"></el-input>
       </el-form-item>
       <el-form-item label="进价" required>
         <el-input v-model="ruleForm.jinjia"></el-input>
@@ -22,31 +25,37 @@
       <el-form-item label="进货日期" required>
         <el-form-item>
           <el-date-picker
-            v-model="ruleForm.date1"
+            v-model="ruleForm.date"
             type="date"
             style="width: 100%;"
             placeholder="选择日期"
+            value-format='yyyy-MM-dd'
           ></el-date-picker>
         </el-form-item>
       </el-form-item>
       <el-form-item label="添加图片">
-          <el-upload
-           class="avatar-uploader"
-            drag
-            action="#"
-            multiple
-            :auto-upload="false"
+        <el-upload
+          class="avatar-uploader"
+          drag
+          action='#'
+          multiple
+          :auto-upload="false"
           :show-file-list="true"
           :on-change="handle"
           :file-list="fileList"
-  list-type="picture-card">
+          :on-preview="handlePictureCardPreview"
+          :on-remove='handleRemove'
+          list-type="picture-card"
+        >
           <i class="el-icon-plus"></i>
-            </el-upload>
-        
+        </el-upload>
+        <el-dialog :visible.sync="dialogVisible">
+          <img width="100%" :src="ImageUrl" alt="">
+        </el-dialog>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">立刻上传</el-button>
-        <el-button>取消</el-button>
+        <el-button @click="goback">取消</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -63,31 +72,48 @@ export default {
         jinjia: "",
         shoujia: "",
         kucun: "",
-        imageUrl: "",
-        row: ""
+        date:'',
+        title:''
       },
-      fileList: [{name: 'food.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}, {name: 'food2.jpeg', url: 'https://fuss10.elemecdn.com/3/63/4e7f3a15429bfda99bce42a18cdd1jpeg.jpeg?imageMogr2/thumbnail/360x360/format/webp/quality/100'}]
+      dialogVisible:false,
+      ImageUrl: "",
+      fileList: [],
+      rowlist:[]
     };
   },
   methods: {
     handle(res, res2) {
       var objectURL = window.URL.createObjectURL(res.raw);
-      this.ruleForm.imageUrl = objectURL;
-      this.ruleForm.raw = res.raw;
+      this.fileList.push({
+        id:res.uid,
+        url:objectURL
+      })
+      this.rowlist.push({
+        id:res.uid,
+        row:res.raw
+      })
+    },
+    onadd(){
+      let fd = new FormData();
+      for(let key in this.ruleForm){
+        fd.append(key, this.ruleForm[key]);
+      }
+      for(let i = 0;i<this.rowlist.length;i++){
+        console.log(this.rowlist[i])
+        fd.append('file', this.rowlist[i].row);
+      }
+      return fd
+    },
+    goback(){
+      this.$router.go(-1)
     },
     onSubmit() {
-      let data = this.ruleForm;
-      const fd = new FormData();
-      fd.append("file", this.ruleForm.raw);
-      fd.append("name", this.ruleForm.name);
-      fd.append("changshang", this.ruleForm.changshang);
-      fd.append("jinjia", this.ruleForm.jinjia);
-      fd.append("shoujia", this.ruleForm.shoujia);
-      fd.append("kucun", this.ruleForm.kucun);
+      console.log(this.fileList)
+      let data = this.onadd()
       axios({
         url: "/api/lunboadd",
         method: "post",
-        data: fd,
+        data,
         headers: {
           "Content-Type": "multipart/form-data",
           where: this.ruleForm.name
@@ -101,6 +127,20 @@ export default {
           });
         }
       });
+    },
+    handlePictureCardPreview(file) {
+      //查看图片
+        this.ImageUrl = file.url;
+        this.dialogVisible = true;
+    },
+    handleRemove(file, fileList){
+      for(let i = 0;i<this.fileList.length;i++){
+        if(this.fileList[i].id==file.id){
+          this.fileList.splice(i,1)
+          this.rowlist.splice(i,1)
+          return
+        }
+      }
     }
   }
 };
@@ -108,31 +148,39 @@ export default {
 
 
 <style lang="stylus" scoped>
+.contain{
+  padding:40px
+  backgroudn:#ccc
+}
 .avatar-uploader .el-upload {
-    border: 1px dashed #d9d9d9;
-    border-radius: 6px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
-  }
-  .avatar-uploader .el-upload:hover {
-    border-color: #409EFF;
-  }
-  .avatar-uploader-icon {
-    font-size: 28px;
-    color: #8c939d;
-    width: 178px;
-    height: 178px;
-    line-height: 178px;
-    text-align: center;
-  }
-  .avatar {
-    width: 178px;
-    height: 178px;
-    display: block;
-  }
-  .el-upload-dragger{
-    width: 146px;
-    height: 146px;
-  }
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.avatar-uploader .el-upload:hover {
+  border-color: #409EFF;
+}
+
+.avatar-uploader-icon {
+  font-size: 28px;
+  color: #8c939d;
+  width: 178px;
+  height: 178px;
+  line-height: 178px;
+  text-align: center;
+}
+
+.avatar {
+  width: 178px;
+  height: 178px;
+  display: block;
+}
+
+>>>.el-upload-dragger {
+  width: 146px;
+  height: 146px;
+}
 </style>

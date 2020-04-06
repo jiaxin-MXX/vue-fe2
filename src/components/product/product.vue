@@ -1,6 +1,6 @@
 <template>
     <div style="height:100%" class="table-center">
-          <el-table stripe height="85%" border :data="tableData" style="width: 100%">
+          <el-table stripe height="90%" border :data="tableData">
             <el-table-column prop="name" label="名称"></el-table-column>
             <el-table-column prop="jinjia" label="进价"></el-table-column>
             <el-table-column prop="shoujia" label="售价"></el-table-column>
@@ -23,9 +23,11 @@
             </template>
             </el-table-column>
         </el-table>
-        <div class='caozuo'>
-            <el-button @click="add" type="primary">添加商品信息</el-button>
-        </div>
+        <el-row type='flex' align='middle' class="caozuo">
+            <el-col :offset='2' :span="6">   
+                <el-button @click="add" type="primary">添加商品信息</el-button>
+            </el-col>
+        </el-row>
     </div>
 </template>
 
@@ -286,7 +288,6 @@ export default {
 </script>
 <style lang="stylus" scoped>
 .caozuo{
-    height:15%;
-    background:blue
+    height:10%;
 }
 </style>

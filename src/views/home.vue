@@ -40,22 +40,30 @@
         </el-menu-item>
       </el-menu>
     </div>
-    <div class="grid grid-right">
-      <el-row type="flex" class='header'>
-        <el-col :span="12" :offset="6"><div class="grid-content bg-purple title">手机商城管理系统</div></el-col>
-        <el-col :span="3" :offset="3"><div class="grid-content bg-purple user">
-          <el-popover
-            placement="bottom"
-            title="admin"
-            trigger="manual"
-            v-model="visible">
-            <div style="border-top:1px solid #ccc" @click="tuichu">退出</div>
-            <el-button circle type="info" icon="el-icon-user" slot="reference" @click="visible = !visible"></el-button>
-          </el-popover>
-          
-        </div></el-col>
+    <div class="grid grid-right" style="display: flex;flex-direction: column;height:100vh">
+      <el-row type="flex" class="header">
+        <el-col :span="12" :offset="6">
+          <div class="grid-content bg-purple title">手机商城管理系统</div>
+        </el-col>
+        <el-col :span="3" :offset="3">
+          <div class="grid-content bg-purple user">
+            <el-popover placement="bottom" title="admin" trigger="manual" v-model="visible">
+              <div style="border-top:1px solid #ccc" @click="tuichu">退出</div>
+              <el-button
+                circle
+                type="info"
+                icon="el-icon-user"
+                slot="reference"
+                @click="visible = !visible"
+              ></el-button>
+            </el-popover>
+          </div>
+        </el-col>
       </el-row>
-      <div style="height:100%;overflow:auto"><router-view></router-view></div>
+      <div style="flex:1;overflow:auto">
+        <router-view></router-view>
+      </div>
+      <div class="bottom">CREATED BY 贾鑫</div>
     </div>
   </div>
 </template>
@@ -72,19 +80,19 @@ export default {
     text() {
       return this.open ? "折叠" : "";
     },
-    deActive(){
-      let path = (this.$route.path).substring(1)
-      return path
+    deActive() {
+      let path = this.$route.path.substring(1);
+      return path;
     }
   },
   methods: {
     selectone(index) {
-      let [name,mess] = index.split('/')
-      console.log(this.$route)
-      this.$router.push({name,params:{mess}})
+      let [name, mess] = index.split("/");
+      console.log(this.$route);
+      this.$router.push({ name, params: { mess } });
     },
-    tuichu(){
-      this.$router.push({name:'login'})
+    tuichu() {
+      this.$router.push({ name: "login" });
     }
   }
 };
@@ -97,8 +105,7 @@ export default {
 
 .contain {
   display: flex;
-  height: 100vh;
-  overflow: hidden;
+  justify-content: center;
 
   .switch {
     height: 56px;
@@ -114,6 +121,7 @@ export default {
 
   .grid-left {
     background-color: #545c64;
+    margin-right: 1px;
 
     >>>.el-menu {
       border: none;
@@ -125,18 +133,22 @@ export default {
   }
 
   .grid-right {
-    width:100%;
+    width: 100%;
     background: white;
-    .header{
-      height 50px
-      width 100%
+    flex: 1;
+    overflow: hidden;
+    .header {
+      height: 50px;
+      width: 100%;
       align-items: center;
       background: #545c64;
-       .grid-content {
+
+      .grid-content {
         border-radius: 4px;
         min-height: 36px;
       }
-      .title{
+
+      .title {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -145,11 +157,22 @@ export default {
         -webkit-background-clip: text;
         color: transparent;
       }
-      .user{
+
+      .user {
         display: flex;
         justify-content: center;
       }
     }
+  }
+
+  .bottom {
+    background: #545c64;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    font-weight: 700;
   }
 }
 </style>

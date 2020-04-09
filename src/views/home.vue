@@ -24,6 +24,7 @@
             <span>查看仓库</span>
           </template>
           <el-menu-item index="product/all">全部产品</el-menu-item>
+          <el-menu-item index="detail">产品详情</el-menu-item>
           <el-submenu index="1-2">
             <template slot="title">产品分类</template>
             <el-menu-item index="product/huawei">华为</el-menu-item>

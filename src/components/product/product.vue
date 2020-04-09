@@ -12,10 +12,7 @@
             <template slot-scope="scope">
                 <el-button
                 size="mini"
-                @click="handleDelete(scope.$index, scope.row)">详情</el-button>
-                <el-button
-                size="mini"
-                @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
+                @click="handleDetail(scope.$index, scope.row)">详情</el-button>
                 <el-button
                 size="mini"
                 type="danger"
@@ -32,257 +29,40 @@
 </template>
 
 <script>
+import {get} from 'utils/http'
 export default {
   data() {
     return {
-      tableData: [
-         {
-              name:'华为p30',
-              jinjia:1900,
-              shoujia:2000,
-              tupian:[],
-              kucun:'库存',
-              title:'',
-              
-              xiaoliang:13,
-              changshang:'huawei',
-              jinhuoriqi:'进货日期'
-          },
-          {
-              name:'华为p30',
-              jinjia:1900,
-              shoujia:2000,
-              tupian:[],
-              kucun:'库存',
-              title:'',
-              
-              xiaoliang:13,
-              changshang:'huawei',
-              jinhuoriqi:'进货日期'
-          },
-          {
-              name:'华为p30',
-              jinjia:1900,
-              shoujia:2000,
-              tupian:[],
-              kucun:'库存',
-              title:'',
-              
-              xiaoliang:13,
-              changshang:'huawei',
-              jinhuoriqi:'进货日期'
-          },
-          {
-              name:'华为p30',
-              jinjia:1900,
-              shoujia:2000,
-              tupian:[],
-              kucun:'库存',
-              title:'',
-              
-              xiaoliang:13,
-              changshang:'huawei',
-              jinhuoriqi:'进货日期'
-          },
-          {
-              name:'华为p30',
-              jinjia:1900,
-              shoujia:2000,
-              tupian:[],
-              kucun:'库存',
-              title:'',
-              
-              xiaoliang:13,
-              changshang:'huawei',
-              jinhuoriqi:'进货日期'
-          },
-          {
-              name:'华为p30',
-              jinjia:1900,
-              shoujia:2000,
-              tupian:[],
-              kucun:'库存',
-              title:'',
-              
-              xiaoliang:13,
-              changshang:'huawei',
-              jinhuoriqi:'进货日期'
-          },
-          {
-              name:'华为p30',
-              jinjia:1900,
-              shoujia:2000,
-              tupian:[],
-              kucun:'库存',
-              title:'',
-              
-              xiaoliang:13,
-              changshang:'huawei',
-              jinhuoriqi:'进货日期'
-          },
-          {
-              name:'华为p30',
-              jinjia:1900,
-              shoujia:2000,
-              tupian:[],
-              kucun:'库存',
-              title:'',
-              
-              xiaoliang:13,
-              changshang:'huawei',
-              jinhuoriqi:'进货日期'
-          },
-          {
-              name:'华为p30',
-              jinjia:1900,
-              shoujia:2000,
-              tupian:[],
-              kucun:'库存',
-              title:'',
-              
-              xiaoliang:13,
-              changshang:'huawei',
-              jinhuoriqi:'进货日期'
-          },
-          {
-              name:'华为p30',
-              jinjia:1900,
-              shoujia:2000,
-              tupian:[],
-              kucun:'库存',
-              title:'',
-              
-              xiaoliang:13,
-              changshang:'huawei',
-              jinhuoriqi:'进货日期'
-          },
-          {
-              name:'华为p30',
-              jinjia:1900,
-              shoujia:2000,
-              tupian:[],
-              kucun:'库存',
-              title:'',
-              
-              xiaoliang:13,
-              changshang:'huawei',
-              jinhuoriqi:'进货日期'
-          },
-          {
-              name:'华为p30',
-              jinjia:1900,
-              shoujia:2000,
-              tupian:[],
-              kucun:'库存',
-              title:'',
-              
-              xiaoliang:13,
-              changshang:'huawei',
-              jinhuoriqi:'进货日期'
-          },
-          {
-              name:'华为p30',
-              jinjia:1900,
-              shoujia:2000,
-              tupian:[],
-              kucun:'库存',
-              title:'',
-              
-              xiaoliang:13,
-              changshang:'huawei',
-              jinhuoriqi:'进货日期'
-          },
-          {
-              name:'华为p30',
-              jinjia:1900,
-              shoujia:2000,
-              tupian:[],
-              kucun:'库存',
-              title:'',
-              
-              xiaoliang:13,
-              changshang:'huawei',
-              jinhuoriqi:'进货日期'
-          },
-          {
-              name:'华为p30',
-              jinjia:1900,
-              shoujia:2000,
-              tupian:[],
-              kucun:'库存',
-              title:'',
-              
-              xiaoliang:13,
-              changshang:'huawei',
-              jinhuoriqi:'进货日期'
-          },
-          {
-              name:'华为p30',
-              jinjia:1900,
-              shoujia:2000,
-              tupian:[],
-              kucun:'库存',
-              title:'',
-              
-              xiaoliang:13,
-              changshang:'huawei',
-              jinhuoriqi:'进货日期'
-          },
-          {
-              name:'华为p30',
-              jinjia:1900,
-              shoujia:2000,
-              tupian:[],
-              kucun:'库存',
-              title:'',
-              
-              xiaoliang:13,
-              changshang:'huawei',
-              jinhuoriqi:'进货日期'
-          },
-          {
-              name:'华为p30',
-              jinjia:1900,
-              shoujia:2000,
-              tupian:[],
-              kucun:'库存',
-              title:'',
-              
-              xiaoliang:13,
-              changshang:'huawei',
-              jinhuoriqi:'进货日期'
-          },
-          {
-              name:'华为p30',
-              jinjia:1900,
-              shoujia:2000,
-              tupian:[],
-              kucun:'库存',
-              title:'',
-              
-              xiaoliang:13,
-              changshang:'huawei',
-              jinhuoriqi:'进货日期'
-          },
-          {
-              name:'华为p30',
-              jinjia:1900,
-              shoujia:2000,
-              tupian:[],
-              kucun:'库存',
-              title:'',
-              
-              xiaoliang:13,
-              changshang:'huawei',
-              jinhuoriqi:'进货日期'
-          },
-      ],
+      tableData:[],
     };
+  },
+  async beforeCreate(){
+      let data =await get({
+          url:'/api/lunbo',
+          params:{
+              page:1,
+              pageSize:10,
+          }
+      })
+      this.tableData=data
   },
   methods:{
       add(){
           this.$router.push({name:'add'})
+      },
+      handleDetail(x,y){
+        //   console.log(x,y)
+        this.$router.push({
+            name:'detail',
+            params:{
+                id:y.id
+            }
+        })
+      },
+      handleDelete(x,y){
+          console.log(x,y)
       }
+
   }
 };
 </script>

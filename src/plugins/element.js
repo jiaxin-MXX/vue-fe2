@@ -1,7 +1,8 @@
 import Vue from 'vue';
 import {
+  Image,
   Avatar,
-    Link,
+  Link,
   Pagination,
   Dialog,
   Autocomplete,
@@ -73,6 +74,7 @@ import {
 } from 'element-ui';
 
 Vue.use(Pagination);
+Vue.use(Image);
 Vue.use(Divider);
 Vue.use(Avatar);
 Vue.use(Link);

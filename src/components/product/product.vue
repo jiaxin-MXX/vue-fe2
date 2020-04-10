@@ -59,8 +59,39 @@ export default {
             }
         })
       },
-      handleDelete(x,y){
-          console.log(x,y)
+      handleDelete(index){
+          this.$confirm("此操作将永久删除该文件, 是否继续?", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning"
+      })
+        .then(async () => {
+          let data = await get({
+            url: "/api/lunbodelete",
+            params: {
+              id: this.mess.id,
+              name: this.mess.name
+            }
+          });
+          if (data.type) {
+            this.$message({
+              type: "success",
+              message: "删除成功!"
+            });
+            this.$router.go(0);
+          } else {
+            this.$message({
+              type: "error",
+              message: "删除失败!"
+            });
+          }
+        })
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消删除"
+          });
+        });
       }
 
   }

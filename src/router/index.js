@@ -7,6 +7,7 @@ import Register from '../views/register.vue'
 import Product from 'components/product/product.vue'
 import Productadd from 'components/product/productadd.vue'
 import Detail from 'components/product/detail.vue'
+import PChange from 'components/product/productC.vue'
 import store from 'store'
 
 const originalPush = VueRouter.prototype.push
@@ -42,7 +43,12 @@ const routes = [
         path:'/detail',
         name:'detail',
         component:Detail
-      }
+      },
+      {
+        path:'/pchange',
+        name:'change',
+        component:PChange
+      },
     ]
   },
   {

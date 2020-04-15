@@ -31,12 +31,16 @@
             <el-menu-item index="product/oppo">OPPO</el-menu-item>
           </el-submenu>
         </el-submenu>
+        <el-menu-item index="order">
+          <i class="el-icon-s-order"></i>
+          <span slot="title">查看订单</span>
+        </el-menu-item>
         <el-menu-item index="tongji">
-          <i class="el-icon-menu"></i>
+          <i class="el-icon-data-line"></i>
           <span slot="title">销量统计</span>
         </el-menu-item>
         <el-menu-item index="user">
-          <i class="el-icon-menu"></i>
+          <i class="el-icon-user"></i>
           <span slot="title">用户管理</span>
         </el-menu-item>
       </el-menu>
@@ -89,7 +93,6 @@ export default {
   methods: {
     selectone(index) {
       let [name, mess] = index.split("/");
-      console.log(this.$route);
       this.$router.push({ name, params: { mess } });
     },
     tuichu() {

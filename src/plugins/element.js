@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import {
+  Drawer,
   Image,
   Avatar,
   Link,
@@ -74,6 +75,7 @@ import {
 } from 'element-ui';
 
 Vue.use(Pagination);
+Vue.use(Drawer);
 Vue.use(Image);
 Vue.use(Divider);
 Vue.use(Avatar);

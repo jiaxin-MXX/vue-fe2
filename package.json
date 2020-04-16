@@ -10,6 +10,7 @@
     "axios": "^0.19.2",
     "core-js": "^3.4.4",
     "element-ui": "^2.13.0",
+    "lodash": "^4.17.15",
     "store": "^2.0.12",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",

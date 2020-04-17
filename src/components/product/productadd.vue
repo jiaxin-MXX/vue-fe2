@@ -33,6 +33,9 @@
           ></el-date-picker>
         </el-form-item>
       </el-form-item>
+      <el-form-item label="商品详情">
+    <el-input type="textarea" v-model="ruleForm.xiangqing"></el-input>
+  </el-form-item>
       <el-form-item label="添加图片">
         <el-upload
           class="avatar-uploader"
@@ -73,7 +76,8 @@ export default {
         shoujia: "",
         kucun: "",
         date:'',
-        title:''
+        title:'',
+        xiangqing:'',
       },
       dialogVisible:false,
       ImageUrl: "",

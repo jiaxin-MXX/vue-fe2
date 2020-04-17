@@ -35,6 +35,7 @@ export default {
     let data = await get({
       url: "/api/lunbo",
       params: {
+        mess:this.$route.params.mess,
         page: 1,
         pageSize: 10
       }
@@ -87,6 +88,19 @@ export default {
             message: "已取消删除"
           });
         });
+    }
+  },
+  watch: {
+    "$route.params.mess": async function() {
+     let data = await get({
+      url: "/api/lunbo",
+      params: {
+        mess:this.$route.params.mess,
+        page: 1,
+        pageSize: 10
+      }
+    });
+    this.tableData = data;
     }
   }
 };

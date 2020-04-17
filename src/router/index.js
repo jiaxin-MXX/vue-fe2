@@ -5,10 +5,13 @@ import Login from '../views/login.vue'
 import Register from '../views/register.vue'
 
 import Product from 'components/product/product.vue'
+import ProductC from 'components/product/productC.vue'
 import Productadd from 'components/product/productadd.vue'
 import Detail from 'components/product/detail.vue'
 
 import Order from 'components/order/order.vue'
+
+import Show from 'components/show/show.vue'
 import store from 'store'
 
 const originalPush = VueRouter.prototype.push
@@ -46,10 +49,20 @@ const routes = [
         component:Detail
       },
       {
+        path:'/change',
+        name:'change',
+        component:ProductC
+      },
+      {
         path:'/order',
         name:'order',
         component:Order
-      }
+      },
+      {
+        path:'/tongji',
+        name:'tongji',
+        component:Show
+      },
     ]
   },
   {

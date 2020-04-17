@@ -26,7 +26,7 @@
     </el-table>
     <el-row type="flex" align="middle" class="caozuo">
       <el-col :offset="2" :span="10">
-        <el-input placeholder="请输入内容" prefix-icon="el-icon-search" v-model="input"></el-input>
+        <el-input @change='inputValue' placeholder="输入姓名或者商品查询" prefix-icon="el-icon-search" v-model="input"></el-input>
       </el-col>
       <el-col :offset="2" :span="10">
         <el-pagination
@@ -69,6 +69,19 @@ export default {
     this.tableData = await this.getdata();
   },
   methods: {
+    async inputValue(value){
+      let res = await get({
+        url:'/api/orderselect',
+        params:{
+          keyword:value
+        }
+      })
+      this.$message({
+        message: res.message,
+        type: 'success'
+      })
+      this.tableData=res.data
+    },
     sortchange(column, prop, order) {
       if (column.order == "descending") {
         //降序

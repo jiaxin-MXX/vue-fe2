@@ -33,6 +33,9 @@
           ></el-date-picker>
         </el-form-item>
       </el-form-item>
+      <el-form-item label="商品详情">
+    <el-input type="textarea" v-model="ruleForm.xiangqing"></el-input>
+  </el-form-item>
       <el-form-item label="已有图片" required>
         <el-tag
           closable
@@ -92,9 +95,11 @@ export default {
         shoujia: "",
         kucun: "",
         date: "",
-        title: ""
+        title: "",
+        xiangqing:'',
       },
       dialogVisible: false,
+      firstname:null,
       ImageUrl: "",
       fileList: [],
       rowlist: [],
@@ -111,7 +116,9 @@ export default {
     this.ruleForm.kucun = this.$route.params.data.kucun;
     this.ruleForm.date = this.$route.params.data.jinhuoriqi;
     this.ruleForm.title = this.$route.params.data.title;
+    this.ruleForm.xiangqing = this.$route.params.data.xiangqing;
     this.srcList = this.$route.params.data.tupian;
+    this.firstname = this.$route.params.data.firstname;
   },
   methods: {
     close(value) {
@@ -172,7 +179,7 @@ export default {
           data,
           headers: {
             "Content-Type": "multipart/form-data",
-            where: this.ruleForm.name
+            where: this.firstname
           }
         }).then(res => {
           if (res.data.message === "修改成功") {

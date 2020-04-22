@@ -39,10 +39,14 @@
           <i class="el-icon-data-line"></i>
           <span slot="title">销量统计</span>
         </el-menu-item>
-        <el-menu-item index="user">
-          <i class="el-icon-user"></i>
-          <span slot="title">用户管理</span>
-        </el-menu-item>
+        <el-submenu index="2">
+          <template slot="title">
+            <i class="el-icon-user"></i>
+            <span>用户管理</span>
+          </template>
+          <el-menu-item index="user">管理员管理</el-menu-item>
+          <el-menu-item index="guke">顾客信息管理</el-menu-item>
+        </el-submenu>
       </el-menu>
     </div>
     <div class="grid grid-right" style="display: flex;flex-direction: column;height:100vh">
@@ -141,6 +145,7 @@ export default {
     background: white;
     flex: 1;
     overflow: hidden;
+
     .header {
       height: 50px;
       width: 100%;

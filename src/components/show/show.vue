@@ -38,6 +38,10 @@ export default {
         yAxis: {
           type: "value"
         },
+        legend:{
+          top:20,
+          left:100
+        },
         series: [
           {
             data: [120, 200, 150, 80, 70, 110, 130],

@@ -94,6 +94,7 @@ export default {
         date: "",
         title: ""
       },
+      firstname:null,
       dialogVisible: false,
       ImageUrl: "",
       fileList: [],
@@ -112,6 +113,7 @@ export default {
     this.ruleForm.date = this.$route.params.data.jinhuoriqi;
     this.ruleForm.title = this.$route.params.data.title;
     this.srcList = this.$route.params.data.tupian;
+    this.firstname = this.$route.params.data.firstname;
   },
   methods: {
     close(value) {
@@ -172,7 +174,7 @@ export default {
           data,
           headers: {
             "Content-Type": "multipart/form-data",
-            where: this.ruleForm.name
+            where: this.firstname
           }
         }).then(res => {
           if (res.data.message === "修改成功") {

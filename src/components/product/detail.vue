@@ -26,6 +26,9 @@
     <el-row class="row">
       <el-col :offset="6" :span="12">标题：{{mess.title}}</el-col>
     </el-row>
+        <el-row class="row">
+      <el-col :offset="6" :span="12">详情：{{mess.xiangqing}}</el-col>
+    </el-row>
     <el-row class="row">
       <el-col :offset="6" :span="18">图片列表：</el-col>
     </el-row>

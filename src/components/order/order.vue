@@ -119,7 +119,7 @@ export default {
               type: "success",
               message: "删除成功!"
             });
-            this.$router.go(0);
+            this.tableData.splice(index,1);
           } else {
             this.$message({
               type: "error",

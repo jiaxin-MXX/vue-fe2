@@ -1,6 +1,6 @@
 <template>
   <div class="contain">
-    <el-form label-width='100px' :model="ruleForm" ref="ruleForm" class="demo-ruleForm">
+    <el-form label-width="100px" :model="ruleForm" ref="ruleForm" class="demo-ruleForm">
       <el-form-item label="产品名称" required>
         <el-input v-model="ruleForm.name"></el-input>
       </el-form-item>
@@ -29,31 +29,31 @@
             type="date"
             style="width: 100%;"
             placeholder="选择日期"
-            value-format='yyyy-MM-dd'
+            value-format="yyyy-MM-dd"
           ></el-date-picker>
         </el-form-item>
       </el-form-item>
       <el-form-item label="商品详情">
-    <el-input type="textarea" v-model="ruleForm.xiangqing"></el-input>
-  </el-form-item>
+        <el-input type="textarea" v-model="ruleForm.xiangqing"></el-input>
+      </el-form-item>
       <el-form-item label="添加图片">
         <el-upload
           class="avatar-uploader"
           drag
-          action='#'
+          action="#"
           multiple
           :auto-upload="false"
           :show-file-list="true"
           :on-change="handle"
           :file-list="fileList"
           :on-preview="handlePictureCardPreview"
-          :on-remove='handleRemove'
+          :on-remove="handleRemove"
           list-type="picture-card"
         >
           <i class="el-icon-plus"></i>
         </el-upload>
         <el-dialog :visible.sync="dialogVisible">
-          <img width="100%" :src="ImageUrl" alt="">
+          <img width="100%" :src="ImageUrl" alt />
         </el-dialog>
       </el-form-item>
       <el-form-item>
@@ -75,45 +75,45 @@ export default {
         jinjia: "",
         shoujia: "",
         kucun: "",
-        date:'',
-        title:'',
-        xiangqing:'',
+        date: "",
+        title: "",
+        xiangqing: ""
       },
-      dialogVisible:false,
+      dialogVisible: false,
       ImageUrl: "",
       fileList: [],
-      rowlist:[]
+      rowlist: []
     };
   },
   methods: {
     handle(res, res2) {
       var objectURL = window.URL.createObjectURL(res.raw);
       this.fileList.push({
-        id:res.uid,
-        url:objectURL
-      })
+        id: res.uid,
+        url: objectURL
+      });
       this.rowlist.push({
-        id:res.uid,
-        row:res.raw
-      })
+        id: res.uid,
+        row: res.raw
+      });
     },
-    onadd(){
+    onadd() {
       let fd = new FormData();
-      for(let key in this.ruleForm){
+      for (let key in this.ruleForm) {
         fd.append(key, this.ruleForm[key]);
       }
-      for(let i = 0;i<this.rowlist.length;i++){
-        console.log(this.rowlist[i])
-        fd.append('file', this.rowlist[i].row);
+      for (let i = 0; i < this.rowlist.length; i++) {
+        console.log(this.rowlist[i]);
+        fd.append("file", this.rowlist[i].row);
       }
-      return fd
+      return fd;
     },
-    goback(){
-      this.$router.go(-1)
+    goback() {
+      this.$router.go(-1);
     },
     onSubmit() {
-      console.log(this.fileList)
-      let data = this.onadd()
+      console.log(this.fileList);
+      let data = this.onadd();
       axios({
         url: "/api/lunboadd",
         method: "post",
@@ -134,15 +134,15 @@ export default {
     },
     handlePictureCardPreview(file) {
       //查看图片
-        this.ImageUrl = file.url;
-        this.dialogVisible = true;
+      this.ImageUrl = file.url;
+      this.dialogVisible = true;
     },
-    handleRemove(file, fileList){
-      for(let i = 0;i<this.fileList.length;i++){
-        if(this.fileList[i].id==file.id){
-          this.fileList.splice(i,1)
-          this.rowlist.splice(i,1)
-          return
+    handleRemove(file, fileList) {
+      for (let i = 0; i < this.fileList.length; i++) {
+        if (this.fileList[i].id == file.id) {
+          this.fileList.splice(i, 1);
+          this.rowlist.splice(i, 1);
+          return;
         }
       }
     }
@@ -152,10 +152,11 @@ export default {
 
 
 <style lang="stylus" scoped>
-.contain{
-  padding:40px
-  backgroudn:#ccc
+.contain {
+  padding: 40px;
+  backgroudn: #ccc;
 }
+
 .avatar-uploader .el-upload {
   border: 1px dashed #d9d9d9;
   border-radius: 6px;

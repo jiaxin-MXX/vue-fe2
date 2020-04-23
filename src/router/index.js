@@ -12,6 +12,9 @@ import Detail from 'components/product/detail.vue'
 import Order from 'components/order/order.vue'
 
 import Show from 'components/show/show.vue'
+
+import User from 'components/user/user.vue'
+import Guke from 'components/user/guke.vue'
 import store from 'store'
 
 const originalPush = VueRouter.prototype.push
@@ -62,6 +65,16 @@ const routes = [
         path:'/tongji',
         name:'tongji',
         component:Show
+      },
+      {
+        path:'/user',
+        name:'user',
+        component:User
+      },
+      {
+        path:'/guke',
+        name:'guke',
+        component:Guke
       },
     ]
   },

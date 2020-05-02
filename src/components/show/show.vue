@@ -12,7 +12,7 @@
 <script>
 import ECharts from "vue-echarts";
 import { bar } from "echarts";
-
+import { get, post } from "utils/http";
 export default {
   components: {
     "v-chart": ECharts
@@ -20,54 +20,117 @@ export default {
   data() {
     return {
       polar: {
-        tooltip: {
-          trigger: "item",
-          triggerOn: "mousemove",
-          showContent: true,
-          borderColor: "#ccc"
-        },
         title: {
-          text: "手机数据统计",
-          subtext: "动态数据",
-          x: "center"
+          text: "手机销量和纯利润统计表",
         },
-        xAxis: {
-          type: "category",
-          data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
+        tooltip: {
+          trigger: "axis"
         },
-        yAxis: {
-          type: "value"
+        legend: {
+          data: ["销量", "纯利润"]
         },
+        toolbox: {
+          show: true,
+          feature: {
+            magicType: { show: true, type: ["line", "bar"] },
+            restore: { show: true },
+            saveAsImage: { show: true }
+          }
+        },
+        calculable: true,
+        xAxis: [
+          {
+            type: "category",
+            data: [
+              "1月",
+              "2月",
+              "3月",
+              "4月",
+              "5月",
+              "6月",
+              "7月",
+              "8月",
+              "9月",
+              "10月",
+              "11月",
+              "12月"
+            ]
+          }
+        ],
+        yAxis: [
+          {
+            type: "value"
+          }
+        ],
         series: [
           {
-            data: [120, 200, 150, 80, 70, 110, 130],
+            name: "销量",
             type: "bar",
-            showBackground: true,
-            itemStyle: {
-              normal: {
-                //这里是重点
-                color: function(params) {
-                  //注意，如果颜色太少的话，后面颜色不会自动循环，最好多定义几个颜色
-                  var colorList = [
-                    "#c23531",
-                    "#2f4554",
-                    "#61a0a8",
-                    "#d48265",
-                    "#91c7ae",
-                    "#749f83",
-                    "#ca8622"
-                  ];
-                  return colorList[params.dataIndex];
-                }
-              }
+            data: [
+              2.0,
+              4.9,
+              7.0,
+              23.2,
+              25.6,
+              76.7,
+              135.6,
+              162.2,
+              32.6,
+              20.0,
+              6.4,
+              3.3
+            ],
+            markPoint: {
+              data: [
+                { type: "max", name: "最大值" },
+                { type: "min", name: "最小值" }
+              ]
             },
-            backgroundStyle: {
-              color: "rgba(220, 220, 220, 0)"
+            markLine: {
+              data: [{ type: "average", name: "平均值" }]
+            }
+          },
+          {
+            name: "纯利润",
+            type: "bar",
+            data: [
+              2.6,
+              5.9,
+              9.0,
+              26.4,
+              28.7,
+              70.7,
+              175.6,
+              182.2,
+              48.7,
+              18.8,
+              6.0,
+              2.3
+            ],
+            markPoint: {
+              data: [
+                { name: "年最高", value: 182.2, xAxis: 7, yAxis: 183 },
+                { name: "年最低", value: 2.3, xAxis: 11, yAxis: 3 }
+              ]
+            },
+            markLine: {
+              data: [{ type: "average", name: "平均值" }]
             }
           }
         ]
       }
     };
+  },
+  async created(){
+    let data = await get({
+      url: "/api/lunbo",
+      params: {
+        mess:'all',
+        page: 1,
+        pageSize: 1000
+      }
+    });
+    console.log(data)
   }
 };
 </script>

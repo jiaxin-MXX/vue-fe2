@@ -56,6 +56,9 @@ export default {
           if(type=='success'&& this.form.remember){
             this.$router.push({name:'home'})
             store.set('user', this.form)
+            this.$store.commit('changeuser',{
+              user:this.form.name
+            })
           }
     },
     toregister(){

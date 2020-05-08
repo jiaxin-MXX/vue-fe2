@@ -56,7 +56,7 @@
         </el-col>
         <el-col :span="3" :offset="3">
           <div class="grid-content bg-purple user">
-            <el-popover placement="bottom" title="admin" trigger="manual" v-model="visible">
+            <el-popover placement="bottom" :title="$store.state.user" trigger="manual" v-model="visible">
               <div style="border-top:1px solid #ccc" @click="tuichu">退出</div>
               <el-button
                 circle
@@ -78,12 +78,17 @@
 </template>
 
 <script>
+import store from 'store'
 export default {
   data() {
     return {
       open: true,
-      visible: false
+      visible: false,
+      user:null,
     };
+  },
+  created(){
+    this.user = store.get('user').name
   },
   computed: {
     text() {

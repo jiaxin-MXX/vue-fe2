@@ -8,6 +8,10 @@
         <el-select v-model="ruleForm.changshang" placeholder="请选择活动区域">
           <el-option label="华为" value="huawei"></el-option>
           <el-option label="OPPO" value="oppo"></el-option>
+          <el-option label="VIVO" value="vivo"></el-option>
+          <el-option label="三星" value="Samsung"></el-option>
+          <el-option label="小米" value="mi"></el-option>
+          <el-option label="苹果" value="apple"></el-option>
         </el-select>
       </el-form-item>
       <el-form-item label="标题" required>

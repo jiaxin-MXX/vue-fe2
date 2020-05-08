@@ -97,7 +97,7 @@ export default {
       params: {
         mess:this.$route.params.mess,
         page: 1,
-        pageSize: 10
+        pageSize: 1000
       }
     });
     this.tableData = data;

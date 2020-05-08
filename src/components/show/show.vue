@@ -12,7 +12,7 @@
 <script>
 import ECharts from "vue-echarts";
 import { bar } from "echarts";
-
+import { get, post } from "utils/http";
 export default {
   components: {
     "v-chart": ECharts
@@ -21,28 +21,22 @@ export default {
     return {
       polar: {
         title: {
-          text: "手机销售量",
+          text: "手机销量和纯利润统计表",
         },
-
         tooltip: {
           trigger: "axis"
         },
-
         legend: {
-          data: ["销售量", "盈利"]
+          data: ["销量", "纯利润"]
         },
-
         toolbox: {
           show: true,
-
           feature: {
-            mark: { show: true },
             magicType: { show: true, type: ["line", "bar"] },
             restore: { show: true },
             saveAsImage: { show: true }
           }
         },
-
         calculable: true,
         xAxis: [
           {
@@ -70,7 +64,7 @@ export default {
         ],
         series: [
           {
-            name: "蒸发量",
+            name: "销量",
             type: "bar",
             data: [
               2.0,
@@ -97,7 +91,7 @@ export default {
             }
           },
           {
-            name: "降水量",
+            name: "纯利润",
             type: "bar",
             data: [
               2.6,
@@ -113,11 +107,10 @@ export default {
               6.0,
               2.3
             ],
-
             markPoint: {
               data: [
-                { type: "max", name: "最大值" },
-                { type: "min", name: "最小值" }
+                { name: "年最高", value: 182.2, xAxis: 7, yAxis: 183 },
+                { name: "年最低", value: 2.3, xAxis: 11, yAxis: 3 }
               ]
             },
             markLine: {
@@ -127,6 +120,17 @@ export default {
         ]
       }
     };
+  },
+  async created(){
+    let data = await get({
+      url: "/api/lunbo",
+      params: {
+        mess:'all',
+        page: 1,
+        pageSize: 1000
+      }
+    });
+    console.log(data)
   }
 };
 </script>

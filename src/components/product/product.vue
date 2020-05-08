@@ -19,6 +19,15 @@
       <el-col :offset="2" :span="6">
         <el-button @click="add" type="primary">添加商品信息</el-button>
       </el-col>
+      <el-col :offset="2" :span="10">
+        <el-pagination
+          @current-change="change"
+          background
+          layout="prev, pager, next"
+          :page-size="page.pagesize"
+          :total="total"
+        ></el-pagination>
+      </el-col>
     </el-row>
   </div>
 </template>
@@ -28,10 +37,16 @@ import { get } from "utils/http";
 export default {
   data() {
     return {
-      tableData: []
+      tableData: [],
+            page: {
+        current: 1,
+        pagesize: 10
+      },
+      total: 0
     };
   },
-  async beforeCreate() {
+  async created() {
+    console.log(this.$route.params.mess)
     let data = await get({
       url: "/api/lunbo",
       params: {
@@ -40,11 +55,27 @@ export default {
         pageSize: 10
       }
     });
-    this.tableData = data;
+
+    this.tableData = data.data;
+    this.total = data.tota;
   },
   methods: {
     add() {
       this.$router.push({ name: "add" });
+    },
+    async change(value) {
+      this.page.current = value;
+      let data = await get({
+      url: "/api/lunbo",
+      params: {
+        mess:this.$route.params.mess,
+        page: value,
+        pageSize: 10
+      }
+    });
+    this.tableData = data.data
+    this.total = data.tota;
+      // this.tableData = await this.getdata()
     },
     handleDetail(x, y) {
       //   console.log(x,y)
@@ -100,7 +131,8 @@ export default {
         pageSize: 1000
       }
     });
-    this.tableData = data;
+        this.tableData = data.data
+    this.total = data.tota;
     }
   }
 };

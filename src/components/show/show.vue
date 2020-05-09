@@ -178,6 +178,7 @@ export default {
       this.polar.xAxis[0].data = xAxis
       this.polar.series[0].data = series0
       this.polar.series[1].data = series1
+      console.log(0)
     }
   }
 };

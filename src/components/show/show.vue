@@ -1,5 +1,8 @@
 <template>
-  <div
+  <div style="display: flex;
+    flex-direction: column;
+    height: 90%;">
+     <div
     style="min-height: 100%;
     display: flex;
     justify-content: center;
@@ -7,18 +10,33 @@
   >
     <v-chart :options="polar" />
   </div>
+  <el-row style="    display: flex;
+    justify-content: center;">
+      <el-button @click="click(key)" v-for="(value,key) in type" :key='key' type="primary">{{value}}</el-button>
+      <el-button @click="click('all')" type="primary">全部</el-button>
+    </el-row>
+  </div>
 </template>
 
 <script>
+import _ from 'lodash';
 import ECharts from "vue-echarts";
 import { bar } from "echarts";
 import { get, post } from "utils/http";
+const type= {
+  huawei:'华为',
+  oppo:'OPPO',
+  vivo:'VIVO',
+  Samsung:'三星',
+  mi:'小米'
+}
 export default {
   components: {
     "v-chart": ECharts
   },
   data() {
     return {
+      type,
       polar: {
         title: {
           text: "手机销量和纯利润统计表",
@@ -27,7 +45,7 @@ export default {
           trigger: "axis"
         },
         legend: {
-          data: ["销量", "纯利润"]
+          data: ["收入", "纯利润"]
         },
         toolbox: {
           show: true,
@@ -40,21 +58,26 @@ export default {
         calculable: true,
         xAxis: [
           {
-            type: "category",
-            data: [
-              "1月",
-              "2月",
-              "3月",
-              "4月",
-              "5月",
-              "6月",
-              "7月",
-              "8月",
-              "9月",
-              "10月",
-              "11月",
-              "12月"
-            ]
+            type: 'category',
+            data: [],
+            axisTick: {
+              alignWithLabel: true
+            },
+            axisLabel: {    //重点在这一块，其余可以忽略
+              interval: 0,   //这个一定要有，别忘记了
+              rotate: 30,
+              textStyle: {
+                color: '#000',
+                fontSize: 10
+              }
+            },
+            axisLine: {
+              show: true,
+              interval: 0,
+              lineStyle: {
+                color: "RGB(210,221,217)"
+              }
+            }
           }
         ],
         yAxis: [
@@ -64,22 +87,9 @@ export default {
         ],
         series: [
           {
-            name: "销量",
+            name: "收入",
             type: "bar",
-            data: [
-              2.0,
-              4.9,
-              7.0,
-              23.2,
-              25.6,
-              76.7,
-              135.6,
-              162.2,
-              32.6,
-              20.0,
-              6.4,
-              3.3
-            ],
+            data: [],
             markPoint: {
               data: [
                 { type: "max", name: "最大值" },
@@ -93,20 +103,7 @@ export default {
           {
             name: "纯利润",
             type: "bar",
-            data: [
-              2.6,
-              5.9,
-              9.0,
-              26.4,
-              28.7,
-              70.7,
-              175.6,
-              182.2,
-              48.7,
-              18.8,
-              6.0,
-              2.3
-            ],
+            data: [],
             markPoint: {
               data: [
                 { name: "年最高", value: 182.2, xAxis: 7, yAxis: 183 },
@@ -118,7 +115,8 @@ export default {
             }
           }
         ]
-      }
+      },
+      list:[],
     };
   },
   async created(){
@@ -130,7 +128,57 @@ export default {
         pageSize: 1000
       }
     });
-    console.log(data)
+    this.list = data.data
+    this.change()
+  },
+  methods:{
+    click(value){
+      if(value == 'all'){
+        this.change()
+      }else{
+        let tempdata = _.groupBy(this.list,(value)=>{
+          return value.changshang
+        })
+        let xAxis = []
+        let series0 = []
+        let series1 = []
+        for(let item of tempdata[value]){
+          let add = 0
+          let lirun = 0
+          add += item.shoujia*item.xiaoliang
+          lirun += (item.shoujia-item.jinjia)*item.xiaoliang
+          series0.push(add)
+          series1.push(lirun)
+          console.log(item.name)
+          xAxis.push(item.name)
+        }
+        this.polar.xAxis[0].data = xAxis
+      this.polar.series[0].data = series0
+      this.polar.series[1].data = series1
+      }
+    },
+    change(){
+      let tempdata = _.groupBy(this.list,(value)=>{
+        return value.changshang
+      })
+      let xAxis = []
+      let series0 = []
+      let series1 = []
+      _.forEach(tempdata,(value,key)=>{
+        let add = 0
+        let lirun = 0
+        for(let item of value){
+          add += item.shoujia*item.xiaoliang
+          lirun += (item.shoujia-item.jinjia)*item.xiaoliang
+        }
+        series0.push(add)
+        series1.push(lirun)
+        xAxis.push(type[key])
+      })
+      this.polar.xAxis[0].data = xAxis
+      this.polar.series[0].data = series0
+      this.polar.series[1].data = series1
+    }
   }
 };
 </script>

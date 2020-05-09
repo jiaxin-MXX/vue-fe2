@@ -29,6 +29,9 @@
             <template slot="title">产品分类</template>
             <el-menu-item index="product/huawei">华为</el-menu-item>
             <el-menu-item index="product/oppo">OPPO</el-menu-item>
+            <el-menu-item index="product/vivo">ViVO</el-menu-item>
+            <el-menu-item index="product/Samsung">三星</el-menu-item>
+            <el-menu-item index="product/mi">小米</el-menu-item>
           </el-submenu>
         </el-submenu>
         <el-menu-item index="order">

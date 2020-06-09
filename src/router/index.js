@@ -3,6 +3,9 @@ import VueRouter from 'vue-router'
 import Home from '../views/home.vue'
 import Login from '../views/login.vue'
 import Register from '../views/register.vue'
+import Test from 'components/test/test.vue'
+import Ditu from '../views/ditu.vue'
+import Svg from '../views/svg.vue'
 
 import Product from 'components/product/product.vue'
 import ProductC from 'components/product/productC.vue'
@@ -36,6 +39,11 @@ const routes = [
     component: Home,
     redirect:'/product/all',
     children:[
+      {
+        path: '/product',
+        name:'product',
+        component: Product,
+      },
       {
         path: '/product/:mess',
         name:'product',
@@ -88,6 +96,21 @@ const routes = [
     name: 'register',
     component: Register
   },
+  {
+    path: '/svg',
+    name: 'svg',
+    component: Svg
+  },
+  {
+    path: '/ditu',
+    name: 'ditu',
+    component: Ditu
+  },
+  {
+    path: '/test',
+    name: 'test',
+    component: Test
+  },
 ]
 
 const router = new VueRouter({
@@ -96,17 +119,17 @@ const router = new VueRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
-  if(from.name=='login' || to.name=='login'){
-    next()
-  }else{
-    if(store.get('user')){
-      next()
-    }else{
-      next("/login")
-    }
-  }
-  // next()
-})
+// router.beforeEach((to, from, next) => {
+//   if(from.name=='login' || to.name=='login'){
+//     next()
+//   }else{
+//     if(store.get('user')){
+//       next()
+//     }else{
+//       next("/login")
+//     }
+//   }
+//   // next()
+// })
 
 export default router

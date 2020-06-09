@@ -1,5 +1,8 @@
 <template>
   <div style="height:100%" class="table-center">
+    <el-row type="flex" justify="center">
+      <h1>{{$route.params.mess}}</h1>
+    </el-row>
     <el-table stripe height="90%" border :data="tableData">
       <el-table-column prop="name" label="名称"></el-table-column>
       <el-table-column prop="jinjia" label="进价"></el-table-column>
@@ -19,7 +22,7 @@
       <el-col :offset="2" :span="6">
         <el-button @click="add" type="primary">添加商品信息</el-button>
       </el-col>
-      <el-col :offset="2" :span="10">
+      <el-col :offset="2" :span="6">
         <el-pagination
           @current-change="change"
           background
@@ -28,25 +31,50 @@
           :total="total"
         ></el-pagination>
       </el-col>
+      <el-col :offset="2" :span="6">
+        <el-button @click="dialogVisible=true" type="primary">添加目录</el-button>
+      </el-col>
     </el-row>
+    <el-dialog
+      title="添加侧边栏"
+      :visible.sync="dialogVisible"
+      width="30%"
+    >
+      <el-form ref="form" :model="slider" label-width="80px">
+        <el-form-item label="英文名">
+          <el-input v-model="slider.en"></el-input>
+        </el-form-item>
+        <el-form-item label="中文名">
+          <el-input v-model="slider.cn"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="slideradd">立即创建</el-button>
+        </el-form-item>
+      </el-form>
+    </el-dialog>
   </div>
 </template>
 
 <script>
-import { get } from "utils/http";
+import { get,post } from "utils/http";
+import { mapActions } from 'vuex'
 export default {
   data() {
     return {
       tableData: [],
-            page: {
+      page: {
         current: 1,
         pagesize: 10
       },
-      total: 0
+      total: 0,
+      dialogVisible:false,
+      slider:{
+        en:'',
+        cn:''
+      }
     };
   },
   async created() {
-    console.log(this.$route.params.mess)
     let data = await get({
       url: "/api/lunbo",
       params: {
@@ -60,6 +88,20 @@ export default {
     this.total = data.tota;
   },
   methods: {
+    ...mapActions({
+      getslider:'getslider'
+    }),
+    async slideradd(){
+      await post({
+        url: "http://localhost:3000/slider",
+        data:{
+          "path":`product/${this.slider.en}`,
+          "title":this.slider.cn
+        }
+      });
+      
+      this.getslider()
+    },
     add() {
       this.$router.push({ name: "add" });
     },

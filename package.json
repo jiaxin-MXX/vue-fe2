@@ -11,7 +11,7 @@
     "core-js": "^3.4.4",
     "echarts": "^4.7.0",
     "element-ui": "^2.13.0",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "store": "^2.0.12",
     "stylus": "^0.54.7",
     "stylus-loader": "^3.0.2",
